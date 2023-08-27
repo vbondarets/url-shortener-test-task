@@ -1,0 +1,81 @@
+version: '3.8'
+
+services:
+  mysql:
+    container_name: mysql-server
+    image: mysql:latest
+    environment:
+      MYSQL_DATABASE: 'url'
+      MYSQL_USER: 'vbondarets'
+      MYSQL_PASSWORD: 'securepass'
+      MYSQL_ROOT_PASSWORD: 'root'
+    ports: 
+      - 3306:3306
+    expose:
+      - '3306'
+    volumes: 
+      - mysql:/var/lib/mysql/
+    healthcheck:
+        test: "/usr/bin/mysql --user=root --password=root --execute \"SHOW DATABASES;\""
+        interval: 2s
+        timeout: 10s
+        retries: 10
+
+    restart: always
+  client: 
+    stdin_open: true #test
+    tty: true #test
+    container_name: react-client
+    environment:
+      BACKEND_HOST_IP: server
+    build:
+      dockerfile: Dockerfile
+      context: ./frontend
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    command: npm run dev
+  server:
+    stdin_open: true #test
+    tty: true #test
+    container_name: node-server
+    build:
+      dockerfile: Dockerfile
+      context: ./backend
+    env_file: 
+      - backend/.env
+    environment:
+      MYSQL_HOST_IP: mysql
+      REDIS_HOST: redis
+      REDIS_USER: redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: securepass
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    ports:
+      - 5000:5000
+    command: npm run dev
+    depends_on:
+      mysql:
+        condition: service_healthy
+    restart: always
+  redis:
+    container_name: redis-server
+    image: redis:latest
+    restart: always
+    ports:
+      - 6379:6379
+    command: redis-server --save 20 1 --loglevel warning
+    environment:
+      REDIS_ARGS: --requirepass securepass 
+    volumes:
+      - redis:/data
+  
+
+volumes:
+  mysql:
+  redis: 
+    driver: local

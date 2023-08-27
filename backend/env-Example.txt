@@ -2,6 +2,6 @@ HOST=localhost
 PORT=5000
 DB_NAME=url
 DB_USER=root
-DB_PASSWORD=JVB0511rrs
+DB_PASSWORD=root
 DB_HOST=mysql-server
 DB_PORT=3306

@@ -22,16 +22,11 @@ class Link extends Model<LinkAttributes, LinkInput> implements LinkAttributes {
 Link.init({
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   old_link: { type: DataTypes.STRING, unique: false, allowNull: false },
-  new_link: { type: DataTypes.STRING, unique: false},
+  new_link: { type: DataTypes.STRING, unique: false },
 }, {
   timestamps: true,
   sequelize: sequelize,
   paranoid: true
 })
 export default Link
-// export const Link = sequelize.define('link', {
-//   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-//   old_link: { type: DataTypes.STRING, unique: false, allowNull: false },
-//   new_link: { type: DataTypes.STRING, unique: false},
-// });
 
