@@ -8,8 +8,11 @@ interface LinkAttributes {
   createdAt?: Date;
   updatedAt?: Date;
 }
-export interface LinkInput extends Optional<LinkAttributes, 'id'> { };
-export interface LinkOuput extends Required<LinkAttributes> { };
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface LinkInput extends Optional<LinkAttributes, 'id'> { }
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface LinkOuput extends Required<LinkAttributes> { }
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 type LinkCreationAttributes = Optional<LinkAttributes, 'id'>;
 class Link extends Model<LinkAttributes, LinkInput> implements LinkAttributes {
   public id!: number;

@@ -18,8 +18,8 @@ services:
     healthcheck:
         test: "/usr/bin/mysql --user=root --password=root --execute \"SHOW DATABASES;\""
         interval: 2s
-        timeout: 10s
-        retries: 10
+        timeout: 5s
+        retries: 20
 
     restart: always
   client: 

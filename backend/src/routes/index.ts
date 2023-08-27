@@ -4,7 +4,7 @@ import linksRouter from './links.route.js';
 
 
 export class AppRouter {
-  constructor(private app: Application) {}
+  constructor(private app: Application) { }
 
   init() {
     this.app.get('/', (_req, res) => {

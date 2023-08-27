@@ -2,10 +2,10 @@ import Link, { LinkInput, LinkOuput } from '../models/Link.model.js'
 import { createClient } from 'redis'
 
 const client = createClient({
-    url: `redis://default:securepass@${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`,
+    url: `redis://default:securepass@${process.env.REDIS_HOST ?? 'localhost'}:${process.env.REDIS_PORT ?? 6379}`,
 })
 client.on('error', err => console.log('Redis CLient error', err));
-await client.connect();
+client.connect();
 
 
 
